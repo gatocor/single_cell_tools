@@ -34,21 +34,124 @@
             
   <section id="api">
 <h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
-<section id="module-single_cell_tools.pipeline.pipeline">
-<span id="pipeline"></span><h2>Pipeline<a class="headerlink" href="#module-single_cell_tools.pipeline.pipeline" title="Permalink to this headline">¶</a></h2>
+<section id="module-single_cell_tools.pipeline">
+<span id="pipeline"></span><h2>Pipeline<a class="headerlink" href="#module-single_cell_tools.pipeline" title="Permalink to this headline">¶</a></h2>
 </section>
 <section id="hyperparameter-selection">
 <h2>Hyperparameter selection<a class="headerlink" href="#hyperparameter-selection" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="module-single_cell_tools.plot.generic">
-<span id="plotting"></span><h2>Plotting<a class="headerlink" href="#module-single_cell_tools.plot.generic" title="Permalink to this headline">¶</a></h2>
+<section id="module-single_cell_tools.hyperparameter_selection">
+<span id="pca"></span><h3>PCA<a class="headerlink" href="#module-single_cell_tools.hyperparameter_selection" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
-<dt class="sig sig-object py" id="single_cell_tools.plot.generic.plot_base">
-<span class="sig-prename descclassname"><span class="pre">single_cell_tools.plot.generic.</span></span><span class="sig-name descname"><span class="pre">plot_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[30,</span> <span class="pre">30]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xtick_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytick_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[10,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xtick_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytick_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_label_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[20,</span> <span class="pre">20]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[True,</span> <span class="pre">True,</span> <span class="pre">True,</span> <span class="pre">True]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.plot.generic.plot_base" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plot base</p>
+<dt class="sig sig-object py" id="single_cell_tools.hyperparameter_selection.pca_explained_variance">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.hyperparameter_selection.</span></span><span class="sig-name descname"><span class="pre">pca_explained_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.hyperparameter_selection.pca_explained_variance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that chooses the number of PCA components based on the explained variance of the first PCAs.</p>
+<p><strong>Argumets:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>adata</strong>: Annotated Data object with the pca already computed and added the metainformation to .uns.</p></li>
+<li><p><strong>threshold=0.9</strong>: Threshold specifying the amount of explained variance of the retained PCs.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Returns:</strong></p>
+<p>Adds to adata.obs[“pca”] information of the hyperparameter selection method “hps_method” 
+and the number of retained PCs under “n_pca_relevant”.</p>
 </dd></dl>
 
-<span class="target" id="module-single_cell_tools.plot.scatter"></span></section>
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.hyperparameter_selection.pca_permutation_test">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.hyperparameter_selection.</span></span><span class="sig-name descname"><span class="pre">pca_permutation_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_perms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_obsm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'X'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_HVGs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_HVGs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'highly_variable'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.hyperparameter_selection.pca_permutation_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that chooses the number of PCA components based on a permutation test.</p>
+<p><strong>Argumets:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>adata</strong>: Annotated Data object with the pca already computed and added the metainformation to .uns.</p></li>
+<li><p><strong>p_value=0.05</strong>: P value retaining the number of PCs under the null model.</p></li>
+<li><p><strong>n_perms=100</strong>: Number of times that the randomization is performed to compute the p-values.</p></li>
+<li><p><strong>key_obsm=”X”</strong>: Matrix to be used for computing the permutation. If “X”, uses adata.X.</p></li>
+<li><p><strong>use_HVGs=False</strong>: Whether to remove HVGs for computing the randomized PCs. It should be consistent with the computation of the PCs without randomization.</p></li>
+<li><p><strong>key_HVGs=”highly_variable”</strong>: Key in .var that contains the information of the Highly varying genes.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Returns:</strong></p>
+<p>Adds to adata.obs[“pca”] information of the hyperparameter selection method “hps_method”,
+the number of retained PCs under “n_pca_relevant”, the variance randomized mean over the permutations “variance_randomized_mean”
+and the p values per component under “permutation_p_value”.</p>
+</dd></dl>
+
+</section>
+<section id="module-0">
+<span id="clustering"></span><h3>Clustering<a class="headerlink" href="#module-0" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.hyperparameter_selection.leiden">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.hyperparameter_selection.</span></span><span class="sig-name descname"><span class="pre">leiden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">adata,</span> <span class="pre">resolutions=array([0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.3,</span> <span class="pre">0.4,</span> <span class="pre">0.5,</span> <span class="pre">0.6,</span> <span class="pre">0.7,</span> <span class="pre">0.8,</span> <span class="pre">0.9,</span> <span class="pre">1.</span> <span class="pre">]),</span> <span class="pre">evaluation_metrics=[&lt;function</span> <span class="pre">surprise&gt;,</span> <span class="pre">&lt;function</span> <span class="pre">modularity_density&gt;],</span> <span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.hyperparameter_selection.leiden" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that constructs over <a class="reference external" href="https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.leiden.html#scanpy-tl-leiden">scp.tl.leiden</a>
+to automatically select the resolution parameter. The optimization algorithm evaluates several metrics for clustering and chooses the best
+resolution among all the metrics using a Friedman Ranking test. The optimization algorithms uses the implementation from 
+<a class="reference external" href="https://cdlib.readthedocs.io/en/latest/index.html">CDLIB</a>.</p>
+<p><strong>Arguments:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>adata</strong>: Annotated Data object to cluster. It requires “neighbors” to be already computed and present in .uns.</p></li>
+<li><p><strong>resolutions=np.linspace(.1,1.1,10)</strong>: Set of resolutions to test the values.</p></li>
+<li><p><strong>evaluation_metrics=[evaluation.surprise,evaluation.modularity_density]</strong>: Evaluation metrics to be choosen from <a class="reference external" href="https://cdlib.readthedocs.io/en/latest/reference/evaluation.html">CDLIB</a></p></li>
+<li><p><strong>kwargs</strong>: Keyword arguments to be sent to <a class="reference external" href="https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.leiden.html#scanpy-tl-leiden">scp.tl.leiden</a>.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Returns:</strong></p>
+<p>Adds to adata.obs[key_added] (being key_added=”leiden” by default) with the best partition 
+and to adata.uns[“leiden”] with the information of the scores fo all resolutions.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.hyperparameter_selection.louvain">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.hyperparameter_selection.</span></span><span class="sig-name descname"><span class="pre">louvain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">adata,</span> <span class="pre">resolutions=array([0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.3,</span> <span class="pre">0.4,</span> <span class="pre">0.5,</span> <span class="pre">0.6,</span> <span class="pre">0.7,</span> <span class="pre">0.8,</span> <span class="pre">0.9,</span> <span class="pre">1.</span> <span class="pre">]),</span> <span class="pre">evaluation_metrics=[&lt;function</span> <span class="pre">surprise&gt;,</span> <span class="pre">&lt;function</span> <span class="pre">modularity_density&gt;],</span> <span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.hyperparameter_selection.louvain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that constructs over <a class="reference external" href="https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.louvain.html#scanpy-tl-louvain">scp.tl.louvain</a>
+to automatically select the resolution parameter. The optimization algorithm evaluates several metrics for clustering and chooses the best
+resolution among all the metrics using a Friedman Ranking test. The optimization algorithms uses the implementation from 
+<a class="reference external" href="https://cdlib.readthedocs.io/en/latest/index.html">CDLIB</a>.</p>
+<p><strong>Arguments:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>adata</strong>: Annotated Data object to cluster. It requires “neighbors” to be already computed and present in .uns.</p></li>
+<li><p><strong>resolutions=np.linspace(.1,1.1,10)</strong>: Set of resolutions to test the values.</p></li>
+<li><p><strong>evaluation_metrics=[evaluation.surprise,evaluation.modularity_density]</strong>: Evaluation metrics to be choosen from <a class="reference external" href="https://cdlib.readthedocs.io/en/latest/reference/evaluation.html">CDLIB</a></p></li>
+<li><p><strong>kwargs</strong>: Keyword arguments to be sent to <a class="reference external" href="https://scanpy.readthedocs.io/en/latest/generated/scanpy.tl.louvain.html#scanpy-tl-louvain">scp.tl.louvain</a>.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Returns:</strong></p>
+<p>Adds to adata.obs[key_added] (being key_added=”louvain” by default) with the best partition 
+and to adata.uns[“louvain”] with the information of the scores fo all resolutions.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="module-single_cell_tools.plot">
+<span id="plotting"></span><h2>Plotting<a class="headerlink" href="#module-single_cell_tools.plot" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.plot.plot_base">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.plot.</span></span><span class="sig-name descname"><span class="pre">plot_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[30,</span> <span class="pre">30]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xtick_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytick_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[10,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xtick_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytick_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_label_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[20,</span> <span class="pre">20]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[True,</span> <span class="pre">True,</span> <span class="pre">True,</span> <span class="pre">True]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.plot.plot_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that simplifies the process of preparing the axis with labels, titles, annotations…</p>
+<p><strong>Arguments:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>ax</strong>: Axis object</p></li>
+<li><p><strong>title=””</strong>: Title of the axis</p></li>
+<li><p><strong>title_size=30</strong>: Font size of the title axis</p></li>
+<li><p><strong>labels=[“”,””]</strong>: xlabel, ylabel</p></li>
+<li><p><strong>labels_size=[30,30]</strong>: fontsize of xlabel and ylabel</p></li>
+<li><p><strong>xtick_pos=None</strong>: Position of the xticks. None sets them by defaults from the plot.</p></li>
+<li><p><strong>ytick_pos=None</strong>: Position of the yticks. None sets them by defaults from the plot.</p></li>
+<li><p><strong>tick_sizes=[10,10]</strong>: Sized of the x and y ticks</p></li>
+<li><p><strong>xtick_labels=None</strong>: Labels of the xticks</p></li>
+<li><p><strong>ytick_labels=None</strong>: Labels of the ytikcs</p></li>
+<li><p><strong>tick_label_sizes=[20,20]</strong>: Sizes of the x and y ticks</p></li>
+<li><p><strong>grid=False</strong>: If to show the grid.</p></li>
+<li><p><strong>spines=[True,True,True,True]</strong>: Visibility of the spines [top,left,bottom,right]</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</section>
 </section>
 
 
@@ -71,9 +174,9 @@
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-single_cell_tools.pipeline.pipeline">Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-single_cell_tools.pipeline">Pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hyperparameter-selection">Hyperparameter selection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-single_cell_tools.plot.generic">Plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-single_cell_tools.plot">Plotting</a></li>
 </ul>
 </li>
 </ul>

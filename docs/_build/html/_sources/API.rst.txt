@@ -6,19 +6,27 @@ API
 Pipeline
 =================
 
-.. automodule:: single_cell_tools.pipeline.pipeline
+.. automodule:: single_cell_tools.pipeline
     :members:
 
 ===========================
 Hyperparameter selection
 ===========================
-.. automodule:: single_cell_tools.hyperparameter_selection.pca
-    :members:
+
+---------------------------
+PCA
+---------------------------
+.. automodule:: single_cell_tools.hyperparameter_selection
+    :members: pca_explained_variance, pca_permutation_test
+
+---------------------------
+Clustering
+---------------------------
+.. automodule:: single_cell_tools.hyperparameter_selection
+    :members: leiden, louvain
 
 ===========================
 Plotting
 ===========================
-.. automodule:: single_cell_tools.plot.generic
-    :members:
-.. automodule:: single_cell_tools.plot.scatter
-    :members:
+.. automodule:: single_cell_tools.plot
+    :members: plot_base
