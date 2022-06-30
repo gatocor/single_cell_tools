@@ -37,6 +37,50 @@
 <section id="module-single_cell_tools.pipeline">
 <span id="pipeline"></span><h2>Pipeline<a class="headerlink" href="#module-single_cell_tools.pipeline" title="Permalink to this headline">¶</a></h2>
 </section>
+<section id="module-single_cell_tools.tools">
+<span id="tools"></span><h2>Tools<a class="headerlink" href="#module-single_cell_tools.tools" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.tools.filter_cells">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.tools.</span></span><span class="sig-name descname"><span class="pre">filter_cells</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.tools.filter_cells" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to filter cells by obs or var features.</p>
+<dl class="simple">
+<dt><strong>Arguments:</strong></dt><dd><ul class="simple">
+<li><p><strong>adata</strong>: Annotated Dataset to filter.</p></li>
+<li><dl class="simple">
+<dt><strong>args</strong>: Arguments seting the filters. Can be defined in three ways:</dt><dd><ul>
+<li><p>Filtering obs categorical features: a tuple of the form (obs,[retained_category1,retaiden_category2…])</p></li>
+<li><p>Filtering obs numerical features: a tuple of the form (obs,min,max)</p></li>
+<li><p>Filtering var features: a tuple of the form (var_key,gene,min,max)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt><strong>Returns:</strong></dt><dd><ul class="simple">
+<li><p>Array of length of cells with True in the retained features.</p></li>
+<li><p>DataFrame with statistics of removed objects.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.tools.qc_metrics">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.tools.</span></span><span class="sig-name descname"><span class="pre">qc_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mtgenes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.tools.qc_metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that computes the basic QC metrics (#counts per cell, #expressed_genes per cell, mitochondrial fraction)</p>
+<dl class="simple">
+<dt><strong>Arguments:</strong></dt><dd><ul class="simple">
+<li><p><strong>adata</strong>: Annotated data where to make the metrics.</p></li>
+<li><p><strong>mtgenes</strong>: Bool array of the length of .var with True in the genes that are mitochondrial.</p></li>
+</ul>
+</dd>
+<dt><strong>Returns:</strong></dt><dd><p>Annotated data with #counts, #expressed_genes, mtFraction added to .obs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="hyperparameter-selection">
 <h2>Hyperparameter selection<a class="headerlink" href="#hyperparameter-selection" title="Permalink to this headline">¶</a></h2>
 <section id="module-single_cell_tools.hyperparameter_selection">
@@ -125,11 +169,30 @@ and to adata.uns[“louvain”] with the information of the scores fo all resolu
 
 </section>
 </section>
+<section id="module-single_cell_tools.evaluation">
+<span id="evaluation"></span><h2>Evaluation<a class="headerlink" href="#module-single_cell_tools.evaluation" title="Permalink to this headline">¶</a></h2>
+</section>
 <section id="module-single_cell_tools.plot">
 <span id="plotting"></span><h2>Plotting<a class="headerlink" href="#module-single_cell_tools.plot" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.plot.hline">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.plot.</span></span><span class="sig-name descname"><span class="pre">hline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.plot.hline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to plot a horizontal line in the plot.</p>
+<p><strong>Arguments:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>ax</strong>: Axis object where to plot the line.</p></li>
+<li><p><strong>pos</strong>: Position in the yaxis where to plot the line.</p></li>
+<li><p><strong>kwargs</strong>: Keyword arguments to be sent to the function matplotlib.pyplot.vlines.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Returns:</strong>
+Adds to axis a line.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="single_cell_tools.plot.plot_base">
-<span class="sig-prename descclassname"><span class="pre">single_cell_tools.plot.</span></span><span class="sig-name descname"><span class="pre">plot_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[30,</span> <span class="pre">30]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xtick_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytick_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[10,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xtick_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytick_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_label_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[20,</span> <span class="pre">20]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[True,</span> <span class="pre">True,</span> <span class="pre">True,</span> <span class="pre">True]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.plot.plot_base" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.plot.</span></span><span class="sig-name descname"><span class="pre">plot_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[30,</span> <span class="pre">30]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xtick_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytick_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[10,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xtick_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytick_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_label_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[20,</span> <span class="pre">20]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[True,</span> <span class="pre">True,</span> <span class="pre">True,</span> <span class="pre">True]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.plot.plot_base" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function that simplifies the process of preparing the axis with labels, titles, annotations…</p>
 <p><strong>Arguments:</strong></p>
 <blockquote>
@@ -147,8 +210,25 @@ and to adata.uns[“louvain”] with the information of the scores fo all resolu
 <li><p><strong>tick_label_sizes=[20,20]</strong>: Sizes of the x and y ticks</p></li>
 <li><p><strong>grid=False</strong>: If to show the grid.</p></li>
 <li><p><strong>spines=[True,True,True,True]</strong>: Visibility of the spines [top,left,bottom,right]</p></li>
+<li><p><strong>axis=None</strong>: If None, axis by default, otherwise the axis limits of the image.</p></li>
 </ul>
 </div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.plot.vline">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.plot.</span></span><span class="sig-name descname"><span class="pre">vline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.plot.vline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to plot a vertical line in the plot.</p>
+<p><strong>Arguments:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>ax</strong>: Axis object where to plot the line.</p></li>
+<li><p><strong>pos</strong>: Position in the xaxis where to plot the line.</p></li>
+<li><p><strong>kwargs</strong>: Keyword arguments to be sent to the function matplotlib.pyplot.vlines.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Returns:</strong>
+Adds to axis a line.</p>
 </dd></dl>
 
 </section>
@@ -175,7 +255,9 @@ and to adata.uns[“louvain”] with the information of the scores fo all resolu
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-single_cell_tools.pipeline">Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-single_cell_tools.tools">Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hyperparameter-selection">Hyperparameter selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-single_cell_tools.evaluation">Evaluation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-single_cell_tools.plot">Plotting</a></li>
 </ul>
 </li>

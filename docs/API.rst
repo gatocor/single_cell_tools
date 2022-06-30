@@ -10,6 +10,13 @@ Pipeline
     :members:
 
 ===========================
+Tools
+===========================
+
+.. automodule:: single_cell_tools.tools
+    :members: qc_metrics, filter_cells
+
+===========================
 Hyperparameter selection
 ===========================
 
@@ -35,4 +42,4 @@ Evaluation
 Plotting
 ===========================
 .. automodule:: single_cell_tools.plot
-    :members: plot_base
+    :members: plot_base, vline, hline

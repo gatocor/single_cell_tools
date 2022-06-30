@@ -1,1 +1,1 @@
-for .batch_correction import *
+from .batch_correction import *

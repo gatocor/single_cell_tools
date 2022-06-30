@@ -4,7 +4,9 @@ def plot_base(ax,
             xtick_pos=None,ytick_pos=None,tick_sizes=[10,10],
             xtick_labels=None,ytick_labels=None,tick_label_sizes=[20,20],
             grid=False,
-            spines=[True,True,True,True]):
+            spines=[True,True,True,True],
+            axis=None
+            ):
     """
     Function that simplifies the process of preparing the axis with labels, titles, annotations...
 
@@ -23,6 +25,7 @@ def plot_base(ax,
      - **tick_label_sizes=[20,20]**: Sizes of the x and y ticks\n
      - **grid=False**: If to show the grid.\n
      - **spines=[True,True,True,True]**: Visibility of the spines [top,left,bottom,right]\n
+     - **axis=None**: If None, axis by default, otherwise the axis limits of the image.
     """
     
     ax.set_title(title,fontsize=title_size)
@@ -48,5 +51,8 @@ def plot_base(ax,
     ax.spines['right'].set_visible(spines[1])
     ax.spines['bottom'].set_visible(spines[2])
     ax.spines['left'].set_visible(spines[3])
+
+    if axis != None:
+        ax.axis(axis)
     
     return

@@ -10,6 +10,13 @@ Pipeline
     :members:
 
 ===========================
+Tools
+===========================
+
+.. automodule:: single_cell_tools.tools
+    :members: qc_metrics, filter_cells
+
+===========================
 Hyperparameter selection
 ===========================
 
@@ -26,7 +33,13 @@ Clustering
     :members: leiden, louvain
 
 ===========================
+Evaluation
+===========================
+.. automodule:: single_cell_tools.evaluation
+    :members: batch_kBET
+
+===========================
 Plotting
 ===========================
 .. automodule:: single_cell_tools.plot
-    :members: plot_base
+    :members: plot_base, vline, hline
