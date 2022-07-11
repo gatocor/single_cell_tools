@@ -34,11 +34,60 @@
             
   <section id="api">
 <h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
-<section id="module-single_cell_tools.pipeline">
-<span id="pipeline"></span><h2>Pipeline<a class="headerlink" href="#module-single_cell_tools.pipeline" title="Permalink to this headline">¶</a></h2>
-</section>
 <section id="module-single_cell_tools.tools">
 <span id="tools"></span><h2>Tools<a class="headerlink" href="#module-single_cell_tools.tools" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.tools.common_genes">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.tools.</span></span><span class="sig-name descname"><span class="pre">common_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_genes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_unmached</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Common_genes'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.tools.common_genes" title="Permalink to this definition">¶</a></dt>
+<dd><p>def common_genes(adata1,adata2,key_genes,remove_unmached=False,add_key=”Common_genes”)</p>
+<p>Function that takes two Annotated Data objects and find the common genes been expressed in both datasets.</p>
+<p>Args:</p>
+<p>adata1: Annotate data to find common genes.
+adata2: Annotate data to find common genes.
+key_genes: Key in .var from both datasets to check if they have common genes.
+remove_unmached=False: If True, remove genes from both datasets that are unmatched. If False, mark genes unmatched with a new key in .var (add_key).
+add_key=”Common_genes”: Key to annotate the data.</p>
+<p>Returns:</p>
+<p>Annotated data objects 1 and 2 with the unmatched genes removed or marked.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.tools.downsample">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.tools.</span></span><span class="sig-name descname"><span class="pre">downsample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.tools.downsample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to downsample an Annotated data. If a categorical batch label is givven the downsample is performed over each label independently.
+This can be useful when for some reason you want to keep small clusters present in the data.</p>
+<dl class="simple">
+<dt><strong>Arguments:</strong></dt><dd><ul class="simple">
+<li><p><strong>adata</strong>: Annotated Data to downsample.</p></li>
+<li><p><strong>p</strong>: Proportion of kept cells.</p></li>
+<li><p><strong>batch=None</strong>: Categorical label in .obs to use for downsampling by category.</p></li>
+<li><p><strong>replace=False</strong>: If to downsample with replacement or not.</p></li>
+<li><p><strong>seed=None</strong>: Random seed to start the downsampling.</p></li>
+</ul>
+</dd>
+<dt><strong>Returns:</strong></dt><dd><p>Downsampled copy of the Annotated Data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.tools.enrichr_to_excel">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.tools.</span></span><span class="sig-name descname"><span class="pre">enrichr_to_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">library</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_genes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.tools.enrichr_to_excel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that sends to <a class="reference external" href="https://maayanlab.cloud/Enrichr/">Enrichr</a> the genes computed by scp.tl.rank_genes_group, 
+retrieves the information from one of the libraries and saves the information in an excel file with each cluster as excel.</p>
+<p><strong>Arguments:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>adata</strong>: Annotated Data with the scanpy.tl.rank_genes_groups runned.</p></li>
+<li><p><strong>library</strong>: Library from <a class="reference external" href="https://maayanlab.cloud/Enrichr/#libraries">enrich libraries</a>.</p></li>
+<li><p><strong>filename</strong>: Name of file where to save the results with “.xlsx” in the end.</p></li>
+<li><p><strong>n_genes</strong>: List of the first ranked genes of each cluster to put in the list.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Returns:</strong></p>
+<p>Excel file with the Enriche queries in different pages of the file.</p>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="single_cell_tools.tools.filter_cells">
 <span class="sig-prename descclassname"><span class="pre">single_cell_tools.tools.</span></span><span class="sig-name descname"><span class="pre">filter_cells</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.tools.filter_cells" title="Permalink to this definition">¶</a></dt>
@@ -80,6 +129,97 @@
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.tools.rank_genes_to_excel">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.tools.</span></span><span class="sig-name descname"><span class="pre">rank_genes_to_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_genes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.tools.rank_genes_to_excel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handy function to write the rank_genes_groups from scanpy to an excel table.</p>
+<p><strong>Arguments:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>adata</strong>: Annotated Data with the scanpy.tl.rank_genes_groups runned.</p></li>
+<li><p><strong>filename</strong>: Name of file where to save the results with “.xlsx” in the end.</p></li>
+<li><p><strong>n_genes</strong>: List of the first ranked genes of each cluster to put in the list.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Returns:</strong></p>
+<p>Excel file with the DE genes in different pages of the file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.tools.scmap_annotate">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.tools.</span></span><span class="sig-name descname"><span class="pre">scmap_annotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_genes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_annotations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm_flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'centroid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_selection_flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'HVGs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_genes_selected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['cosine',</span> <span class="pre">'correlation']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">similarity_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_added</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scmap_annotation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unassigned_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Unassigned'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.tools.scmap_annotate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>def scmap(target_data, </dt><dd><p>reference_adata, 
+key_genes, 
+key_annotations,
+algorithm_flavor=”centroid”,
+gene_selection_flavor=”HVGs”,
+n_genes_selected=1000,
+metrics=[“cosine”,”pearson”],
+similarity_threshold=.7,
+inplace=True,
+key_added=”scmap_annotation”,
+unassigned_label=”Unassigned”,
+verbose=False)</p>
+</dd>
+</dl>
+<p>Function that implements the SCMAP algorithm from Kilesev et al. (2018) to annotate cells.
+Arguments:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>target_data: AnnData object to be annotated.</p></li>
+<li><p>reference_adata: AnnData object to use as reference for annotation.</p></li>
+<li><p>key_genes: Key to be found in <cite>target_data.var</cite> and <cite>reference_data.var</cite> for finding the common genes between both populations.</p></li>
+<li><p>key_annotations: Key to be found in <cite>reference_data.obs</cite> with the labels to annotate the target data.</p></li>
+<li><p>algorithm_flavor=”centroid”: Flavor of the algorithm to be chosen between “centroid” or “cells”.</p></li>
+<li><p>gene_selection_flavor=”HVGs”: Method to chose the gene subset to use for annotation. To choose between “HVGs” (high varying genes), “random” or “dropout”.</p></li>
+<li><p>n_genes_selected=1000: Number of genes to select for matching.</p></li>
+<li><p>metrics=[“cosine”,”pearson”,”spearman”]: Metrics to perform the projection. Use normalized metrics for a proper working of the algorithm.</p></li>
+<li><p>similarity_threshold=.7: Proportion of consensus between neighbors of a cell to be annotated (a number between 0 and 1). Cells with a proportion of neighbors with the same fate lower than the consensus are annotated as “Unassigned”.</p></li>
+<li><p>inplace=True: If True, add the cells assigned to <cite>target_data.obs</cite> with label <cite>key_added</cite>.</p></li>
+<li><p>key_added=”scmap_annotation”: If inplce is True, key added to <cite>target_data.obs</cite> with the Annotations.</p></li>
+<li><p>unassigned_label=”Unassigned”: String added to this cells that do not fill the criteria of assignation.</p></li>
+<li><p>verbose=False: If to print information of the steps of the algorithm.</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.tools.scmap_projection">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.tools.</span></span><span class="sig-name descname"><span class="pre">scmap_projection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_genes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_projection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_selection_flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'HVGs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_genes_selected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cosine'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_added</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scmap_projection'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unassigned_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Unassigned'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.tools.scmap_projection" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>def scmap(target_data, </dt><dd><p>reference_adata, 
+key_genes, 
+key_projection,
+gene_selection_flavor=”HVGs”,
+n_genes_selected=1000,
+metrics=[“cosine”,”pearson”],
+inplace=True,
+key_added=”scmap_annotation”,
+unassigned_label=”Unassigned”,
+verbose=False)</p>
+</dd>
+</dl>
+<p>Function that projects the SCMAP algorithm from Kilesev et al. (2018) to a reduced subspace of cells. Basically implements the KNeighborsRegressor.</p>
+<dl class="simple">
+<dt><strong>Arguments</strong>:</dt><dd><ul class="simple">
+<li><p><strong>target_data</strong>: AnnData object to be annotated.</p></li>
+<li><p><strong>reference_adata</strong>: AnnData object to use as reference for annotation.</p></li>
+<li><p><strong>key_genes</strong>: Key to be found in <cite>target_data.var</cite> and <cite>reference_data.var</cite> for finding the common genes between both populations.</p></li>
+<li><p><strong>key_projection</strong>: Key to be found in <cite>reference_data.obs</cite> with the labels to annotate the target data.</p></li>
+<li><p><strong>algorithm_flavor=”centroid”</strong>: Flavor of the algorithm to be chosen between “centroid” or “cells”.</p></li>
+<li><p><strong>gene_selection_flavor=”HVGs”</strong>: Method to chose the gene subset to use for annotation. To choose between “HVGs” (high varying genes), “random” or “dropout”.</p></li>
+<li><p><strong>n_genes_selected=1000</strong>: Number of genes to select for matching.</p></li>
+<li><p><strong>metrics=[“cosine”,”pearson”,”spearman”],</strong>: Metrics to perform the projection. Use normalized metrics for a proper working of the algorithm.</p></li>
+<li><p><strong>inplace=True</strong>: If True, add the cells assigned to <cite>target_data.obs</cite> with label <cite>key_added</cite>.</p></li>
+<li><p><strong>key_added=”scmap_annotation”</strong>: If inplce is True, key added to <cite>target_data.obs</cite> with the Annotations.</p></li>
+<li><p><strong>unassigned_label=”Unassigned”</strong>: String added to this cells that do not fill the criteria of assignation.</p></li>
+<li><p><strong>verbose=False</strong>: If to print information of the steps of the algorithm.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="hyperparameter-selection">
 <h2>Hyperparameter selection<a class="headerlink" href="#hyperparameter-selection" title="Permalink to this headline">¶</a></h2>
@@ -103,7 +243,7 @@ and the number of retained PCs under “n_pca_relevant”.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="single_cell_tools.hyperparameter_selection.pca_permutation_test">
-<span class="sig-prename descclassname"><span class="pre">single_cell_tools.hyperparameter_selection.</span></span><span class="sig-name descname"><span class="pre">pca_permutation_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_perms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_obsm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'X'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_HVGs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_HVGs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'highly_variable'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.hyperparameter_selection.pca_permutation_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.hyperparameter_selection.</span></span><span class="sig-name descname"><span class="pre">pca_permutation_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_perms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_obsm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'X'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_HVGs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_HVGs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'highly_variable'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.hyperparameter_selection.pca_permutation_test" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function that chooses the number of PCA components based on a permutation test.</p>
 <p><strong>Argumets:</strong></p>
 <blockquote>
@@ -114,6 +254,7 @@ and the number of retained PCs under “n_pca_relevant”.</p>
 <li><p><strong>key_obsm=”X”</strong>: Matrix to be used for computing the permutation. If “X”, uses adata.X.</p></li>
 <li><p><strong>use_HVGs=False</strong>: Whether to remove HVGs for computing the randomized PCs. It should be consistent with the computation of the PCs without randomization.</p></li>
 <li><p><strong>key_HVGs=”highly_variable”</strong>: Key in .var that contains the information of the Highly varying genes.</p></li>
+<li><p><strong>strict=True</strong>: If True, makes the p-value comparing the most informative random PC. If False, compares each PC component with the random component in the same position.</p></li>
 </ul>
 </div></blockquote>
 <p><strong>Returns:</strong></p>
@@ -171,6 +312,27 @@ and to adata.uns[“louvain”] with the information of the scores fo all resolu
 </section>
 <section id="module-single_cell_tools.evaluation">
 <span id="evaluation"></span><h2>Evaluation<a class="headerlink" href="#module-single_cell_tools.evaluation" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.evaluation.kBET">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.evaluation.</span></span><span class="sig-name descname"><span class="pre">kBET</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pReject</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nTopVectors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[10,</span> <span class="pre">20,</span> <span class="pre">30]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.evaluation.kBET" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to compute the kBET metric for batch correction mixing.</p>
+<dl class="simple">
+<dt><strong>Argumnets:</strong> </dt><dd><ul class="simple">
+<li><p><strong>rep</strong>: Representation to use for computing the KNN graph.</p></li>
+<li><p><strong>labels</strong>: Labels specifying the batch of each cell.</p></li>
+<li><p><strong>pReject = 0.01</strong>: Rejection rate for a cell to have a mixed neighborhood.</p></li>
+<li><p><strong>nTopVectors=None</strong>: Number of first columns to use from the rep to compute the KNN. if <cite>None</cite>, use all of them.</p></li>
+<li><p><strong>knns=[10,20,30]</strong>: List of knnn to be used.</p></li>
+<li><p><strong>args</strong>: Args to be send to sklearn.NearestNeighbors function.</p></li>
+<li><p><strong>kwargs</strong>: Keyword Args to be send to sklearn.NearestNeighbors function.</p></li>
+</ul>
+</dd>
+<dt><strong>Return:</strong></dt><dd><p>Median over the mean rejection rate of each knns.
+P value for each samples, it helps to find potential clusters that did not mixed well.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-single_cell_tools.plot">
 <span id="plotting"></span><h2>Plotting<a class="headerlink" href="#module-single_cell_tools.plot" title="Permalink to this headline">¶</a></h2>
@@ -192,15 +354,15 @@ Adds to axis a line.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="single_cell_tools.plot.plot_base">
-<span class="sig-prename descclassname"><span class="pre">single_cell_tools.plot.</span></span><span class="sig-name descname"><span class="pre">plot_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[30,</span> <span class="pre">30]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xtick_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytick_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[10,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xtick_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytick_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_label_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[20,</span> <span class="pre">20]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[True,</span> <span class="pre">True,</span> <span class="pre">True,</span> <span class="pre">True]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.plot.plot_base" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.plot.</span></span><span class="sig-name descname"><span class="pre">plot_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[30,</span> <span class="pre">30]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xtick_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytick_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[10,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xtick_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytick_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_label_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[20,</span> <span class="pre">20]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[True,</span> <span class="pre">True,</span> <span class="pre">True,</span> <span class="pre">True]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_fontsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.plot.plot_base" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function that simplifies the process of preparing the axis with labels, titles, annotations…</p>
 <p><strong>Arguments:</strong></p>
 <blockquote>
 <div><ul class="simple">
 <li><p><strong>ax</strong>: Axis object</p></li>
-<li><p><strong>title=””</strong>: Title of the axis</p></li>
+<li><p><strong>title=None</strong>: Title of the axis</p></li>
 <li><p><strong>title_size=30</strong>: Font size of the title axis</p></li>
-<li><p><strong>labels=[“”,””]</strong>: xlabel, ylabel</p></li>
+<li><p><strong>labels=None</strong>: xlabel, ylabel</p></li>
 <li><p><strong>labels_size=[30,30]</strong>: fontsize of xlabel and ylabel</p></li>
 <li><p><strong>xtick_pos=None</strong>: Position of the xticks. None sets them by defaults from the plot.</p></li>
 <li><p><strong>ytick_pos=None</strong>: Position of the yticks. None sets them by defaults from the plot.</p></li>
@@ -211,8 +373,68 @@ Adds to axis a line.</p>
 <li><p><strong>grid=False</strong>: If to show the grid.</p></li>
 <li><p><strong>spines=[True,True,True,True]</strong>: Visibility of the spines [top,left,bottom,right]</p></li>
 <li><p><strong>axis=None</strong>: If None, axis by default, otherwise the axis limits of the image.</p></li>
+<li><p><a href="#id4"><span class="problematic" id="id5">**</span></a>legend**=True: If to print a legend</p></li>
+<li><p><a href="#id6"><span class="problematic" id="id7">**</span></a>legend_size**=20: Legend size</p></li>
+<li><p><a href="#id8"><span class="problematic" id="id9">**</span></a>legend_pos**=None: Position of the legend. None sets it by default.</p></li>
+<li><p><a href="#id10"><span class="problematic" id="id11">**</span></a>legend_title**=””: Title of the legend</p></li>
+<li><p><a href="#id12"><span class="problematic" id="id13">**</span></a>legend_fontsize**=20: Fontsize of the legend title</p></li>
 </ul>
 </div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.plot.plot_scatter_labels">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.plot.</span></span><span class="sig-name descname"><span class="pre">plot_scatter_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obsm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.plot.plot_scatter_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that plots categorical labels over a plot in the mean position of the cells assigned to that label.</p>
+<dl class="simple">
+<dt><strong>Arguments:</strong></dt><dd><ul class="simple">
+<li><p><strong>ax</strong>: Axis object where to plot the data.</p></li>
+<li><p><strong>adata</strong>: Annotated data that is used.</p></li>
+<li><p><strong>obsm</strong>: Representation used for the plotting.</p></li>
+<li><p><strong>obs</strong>: Categorical label in .obs to use for computing the center of the cells.</p></li>
+</ul>
+</dd>
+<dt><strong>Returns:</strong></dt><dd><p>Nothing. It adds the labels to the Axis object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.plot.plot_scatter_lines">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.plot.</span></span><span class="sig-name descname"><span class="pre">plot_scatter_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obsm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.plot.plot_scatter_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that plots lines between the mean position of the cells assigned to a label.</p>
+<dl class="simple">
+<dt><strong>Arguments:</strong></dt><dd><ul class="simple">
+<li><p><strong>ax</strong>: Axis object where to plot the data.</p></li>
+<li><p><strong>adata</strong>: Annotated data that is used.</p></li>
+<li><p><strong>obsm</strong>: Representation used for the plotting.</p></li>
+<li><p><strong>obs</strong>: Categorical label in .obs to use for computing the center of the cells.</p></li>
+<li><p><strong>matrix</strong>: Square matrix of the same size than categories containing the connections.</p></li>
+<li><p><strong>width=10</strong>: Factor to increase the width of the plotted lines.</p></li>
+</ul>
+</dd>
+<dt><strong>Returns:</strong></dt><dd><p>Nothing. It adds the lines to the Axis object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="single_cell_tools.plot.plot_scatter_pies">
+<span class="sig-prename descclassname"><span class="pre">single_cell_tools.plot.</span></span><span class="sig-name descname"><span class="pre">plot_scatter_pies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obsm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rocket_r'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#single_cell_tools.plot.plot_scatter_pies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that plots a pie in the mean position of the cells assigned to a label with the proportion of cells from a second label.</p>
+<dl class="simple">
+<dt><strong>Arguments:</strong></dt><dd><ul class="simple">
+<li><p><strong>ax</strong>: Axis object where to plot the data.</p></li>
+<li><p><strong>adata</strong>: Annotated data that is used.</p></li>
+<li><p><strong>obsm</strong>: Representation used for the plotting.</p></li>
+<li><p><strong>obs</strong>: Categorical label in .obs to use for computing the center of the cells.</p></li>
+<li><p><strong>obs2</strong>: Categorical label in .obs to use for computing the pieces of the pie.</p></li>
+<li><p><strong>cmap=”rocket_r”</strong>: Color map of the pies.</p></li>
+</ul>
+</dd>
+<dt><strong>Returns:</strong></dt><dd><p>Nothing. It adds the pies to the Axis object.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -254,7 +476,6 @@ Adds to axis a line.</p>
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-single_cell_tools.pipeline">Pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-single_cell_tools.tools">Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hyperparameter-selection">Hyperparameter selection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-single_cell_tools.evaluation">Evaluation</a></li>

@@ -32,6 +32,7 @@ def leiden(adata,
     G.add_edges(zip(g.nonzero()[0],g.nonzero()[1]))
 
     coms = []
+    N = {}
     for r in resolutions:
         kwargs["resolution"] = r
         scp.tl.leiden(adata,**kwargs)
@@ -47,6 +48,7 @@ def leiden(adata,
             communities.append(np.where(cluster_ids == cluster)[0])
             
         coms.append(NodeClustering(communities, graph=G, method_name="leiden_"+str(r)))
+        N["leiden_"+str(r)] = len(np.unique(cluster_ids))
 
     rk = evaluation.FitnessRanking(G, coms)
     for metric in evaluation_metrics:
@@ -54,20 +56,25 @@ def leiden(adata,
 
     rnk, p_value = rk.friedman_ranking()
 
-    score = [i.score for i in rnk]
-    param = [float(i.param) for i in rnk]
-    adata.uns["leiden"] = {"resolution_best":param[0],"score_best":score[0],"metrics":evaluation_metrics}
+    name = np.array([i.alg+"_"+i.param for i in rnk])
+    score = np.array([i.score for i in rnk])
+    param = np.array([float(i.param) for i in rnk])
+    m = {"resolution_best":param[0],"score_best":score[0],"metrics":[str(i) for i in evaluation_metrics]}
+    adata.uns["leiden"] = m
 
     order = np.argsort(param)
     score = score[order]
     param = param[order]
-
-    adata.uns["leiden"]["scores"] = score
-    param.uns["leiden"]["params"] = param
+    name = name[order]
 
     kwargs["resolution"] = adata.uns["leiden"]["resolution_best"]
     scp.tl.leiden(adata,**kwargs)
 
+    adata.uns["leiden"] = m
+    adata.uns["leiden"]["scores"] = score
+    adata.uns["leiden"]["params"] = param
+    adata.uns["leiden"]["n_clusters"] = np.array([N[i] for i in name])
+    
     return
 
 def louvain(adata,
@@ -99,6 +106,7 @@ def louvain(adata,
     G.add_edges(zip(g.nonzero()[0],g.nonzero()[1]))
 
     coms = []
+    N = {}
     for r in resolutions:
         kwargs["resolution"] = r
         scp.tl.louvain(adata,**kwargs)
@@ -114,6 +122,7 @@ def louvain(adata,
             communities.append(np.where(cluster_ids == cluster)[0])
             
         coms.append(NodeClustering(communities, graph=G, method_name="louvain_"+str(r)))
+        N["louvain_"+str(r)] = len(np.unique(cluster_ids))
 
     rk = evaluation.FitnessRanking(G, coms)
     for metric in evaluation_metrics:
@@ -121,18 +130,23 @@ def louvain(adata,
 
     rnk, p_value = rk.friedman_ranking()
 
-    score = [i.score for i in rnk]
-    param = [float(i.param) for i in rnk]
-    adata.uns["louvain"] = {"resolution_best":param[0],"score_best":score[0],"metrics":evaluation_metrics}
+    name = np.array([i.alg+"_"+i.param for i in rnk])
+    score = np.array([i.score for i in rnk])
+    param = np.array([float(i.param) for i in rnk])
+    m = {"resolution_best":param[0],"score_best":score[0],"metrics":[str(i) for i in evaluation_metrics]}
+    adata.uns["louvain"] = m
 
     order = np.argsort(param)
     score = score[order]
     param = param[order]
+    name = name[order]
 
-    adata.uns["louvain"]["scores"] = score
-    param.uns["louvain"]["params"] = param
-
-    kwargs["resolution"] = adata.uns["leiden"]["resolution_best"]
+    kwargs["resolution"] = adata.uns["louvain"]["resolution_best"]
     scp.tl.louvain(adata,**kwargs)
 
+    adata.uns["louvain"] = m
+    adata.uns["louvain"]["scores"] = score
+    adata.uns["louvain"]["params"] = param
+    adata.uns["louvain"]["n_clusters"] = np.array([N[i] for i in name])
+    
     return

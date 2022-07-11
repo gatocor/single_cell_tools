@@ -2,19 +2,12 @@
 API
 #################
 
-=================
-Pipeline
-=================
-
-.. automodule:: single_cell_tools.pipeline
-    :members:
-
 ===========================
 Tools
 ===========================
 
 .. automodule:: single_cell_tools.tools
-    :members: qc_metrics, filter_cells
+    :members: qc_metrics, filter_cells, rank_genes_to_excel, enrichr_to_excel, downsample, common_genes, scmap_annotate, scmap_projection
 
 ===========================
 Hyperparameter selection
@@ -36,10 +29,10 @@ Clustering
 Evaluation
 ===========================
 .. automodule:: single_cell_tools.evaluation
-    :members: batch_kBET
+    :members: kBET
 
 ===========================
 Plotting
 ===========================
 .. automodule:: single_cell_tools.plot
-    :members: plot_base, vline, hline
+    :members: plot_base, vline, hline, plot_scatter_labels, plot_scatter_lines, plot_scatter_pies
