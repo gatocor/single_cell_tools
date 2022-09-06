@@ -7,13 +7,13 @@ def kBET(rep, labels, pReject = 0.01, nTopVectors=None, knns = [10,20,30], *args
     Function to compute the kBET metric for batch correction mixing.
     
     **Argumnets:** 
-     - **rep**: Representation to use for computing the KNN graph.
-     - **labels**: Labels specifying the batch of each cell.
-     - **pReject = 0.01**: Rejection rate for a cell to have a mixed neighborhood.
-     - **nTopVectors=None**: Number of first columns to use from the rep to compute the KNN. if `None`, use all of them.
-     - **knns=[10,20,30]**: List of knnn to be used.
-     - **args**: Args to be send to sklearn.NearestNeighbors function.
-     - **kwargs**: Keyword Args to be send to sklearn.NearestNeighbors function.
+     **rep**: Representation to use for computing the KNN graph.
+     **labels**: Labels specifying the batch of each cell.
+     **pReject = 0.01**: Rejection rate for a cell to have a mixed neighborhood.
+     **nTopVectors=None**: Number of first columns to use from the rep to compute the KNN. if `None`, use all of them.
+     **knns=[10,20,30]**: List of knnn to be used.
+     **args**: Args to be send to sklearn.NearestNeighbors function.
+     **kwargs**: Keyword Args to be send to sklearn.NearestNeighbors function.
         
     **Return:**
      Median over the mean rejection rate of each knns.

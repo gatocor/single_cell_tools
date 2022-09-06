@@ -3,18 +3,6 @@ import seaborn as sns
 import matplotlib.patches as mpatches
 
 def plot_scatter_labels(ax,adata,obsm,obs,**kwargs):
-    """
-    Function that plots categorical labels over a plot in the mean position of the cells assigned to that label.
-
-    **Arguments:**
-     - **ax**: Axis object where to plot the data.
-     - **adata**: Annotated data that is used.
-     - **obsm**: Representation used for the plotting.
-     - **obs**: Categorical label in .obs to use for computing the center of the cells.
-
-    **Returns:**
-     Nothing. It adds the labels to the Axis object.
-    """
 
     X = adata.obsm[obsm]
     for label in np.unique(adata.obs[obs].values):
@@ -26,20 +14,6 @@ def plot_scatter_labels(ax,adata,obsm,obs,**kwargs):
     return
 
 def plot_scatter_lines(ax,adata,obsm,obs,matrix,width=10):
-    """
-    Function that plots lines between the mean position of the cells assigned to a label.
-
-    **Arguments:**
-     - **ax**: Axis object where to plot the data.
-     - **adata**: Annotated data that is used.
-     - **obsm**: Representation used for the plotting.
-     - **obs**: Categorical label in .obs to use for computing the center of the cells.
-     - **matrix**: Square matrix of the same size than categories containing the connections.
-     - **width=10**: Factor to increase the width of the plotted lines.
-
-    **Returns:**
-     Nothing. It adds the lines to the Axis object.
-    """
 
     categories = adata.obs[obs]
     for i,origin in enumerate(categories.cat.categories.values): 
@@ -51,21 +25,7 @@ def plot_scatter_lines(ax,adata,obsm,obs,matrix,width=10):
 
     return
 
-def plot_scatter_pies(ax,adata,obsm,obs,obs2,cmap="rocket_r"):
-    """
-    Function that plots a pie in the mean position of the cells assigned to a label with the proportion of cells from a second label.
-
-    **Arguments:**
-     - **ax**: Axis object where to plot the data.
-     - **adata**: Annotated data that is used.
-     - **obsm**: Representation used for the plotting.
-     - **obs**: Categorical label in .obs to use for computing the center of the cells.
-     - **obs2**: Categorical label in .obs to use for computing the pieces of the pie.
-     - **cmap="rocket_r"**: Color map of the pies.
-
-    **Returns:**
-     Nothing. It adds the pies to the Axis object.
-    """
+def plot_scatter_pies(ax,adata,obsm,obs,obs2,width=10,cmap="rocket_r"):
 
     categories = adata.obs[obs]
     categories2 = np.sort(adata.obs[obs2].cat.categories.values)

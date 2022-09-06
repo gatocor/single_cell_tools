@@ -2,7 +2,7 @@ def plot_base(ax,
             title="",title_size=30,
             labels=[],labels_size=[30,30],
             xtick_pos=None,ytick_pos=None,tick_sizes=[10,10],
-            xtick_labels=None,ytick_labels=None,tick_label_sizes=[20,20],
+            xtick_labels=None,ytick_labels=None,tick_label_sizes=[20,20],tick_labels_rotation=[0,90],
             grid=False,
             spines=[True,True,True,True],
             axis=None,
@@ -11,6 +11,7 @@ def plot_base(ax,
             legend_pos=None,
             legend_title="",
             legend_fontsize=20,
+            legend_markerscale=1,
             ):
     """
     Function that simplifies the process of preparing the axis with labels, titles, annotations...
@@ -36,6 +37,7 @@ def plot_base(ax,
      - **legend_pos**=None: Position of the legend. None sets it by default.
      - **legend_title**="": Title of the legend
      - **legend_fontsize**=20: Fontsize of the legend title
+     - **legend_markerscale=1**: Markerscale of the legend
     """
     
     if title != None:
@@ -68,6 +70,6 @@ def plot_base(ax,
         ax.axis(axis)
 
     if legend:
-        ax.legend(fontsize=legend_size,loc=legend_pos,title=legend_title,title_fontsize=legend_fontsize)
+        ax.legend(fontsize=legend_size,loc=legend_pos,title=legend_title,title_fontsize=legend_fontsize,markerscale=legend_markerscale)
     
     return
